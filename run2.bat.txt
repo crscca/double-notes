@@ -1,0 +1,43 @@
+oc create -f https://raw.githubusercontent.com/raghuraman1/s2i-java/master/ose3/s2i-java-imagestream.json
+
+call oc env dc resource my_sql_secret_ip=172.30.65.168 my_sql_secret_port=3306 my_sql_secret_db=raghu my_sql_secret_username=raghu my_sql_secret_password=raghu
+call oc env dc ui3 my_sql_secret_ip=172.30.186.235 my_sql_secret_port=3306 my_sql_secret_db=raghu my_sql_secret_username=raghu my_sql_secret_password=raghu
+call oc env dc gateway my_sql_secret_ip=172.30.65.168 ui3_secret_ip=172.30.162.21 resource_secret_ip=172.30.93.205 my_sql_secret_port=3306 my_sql_secret_db=raghu my_sql_secret_username=raghu my_sql_secret_password=raghu
+
+oc new-app openshift/wildfly-100-centos7~https://github.com/thesteve0/my-rs-app.git --name=myapp
+
+
+oc new-app s2i-java~https://github.com/raghuraman1/myjdbccheck.git --name=myjdbccheck
+
+oc new-app s2i-java~https://github.com/raghuraman1/Double-Admin.git --name=admin
+
+
+oc new-app openshift/postgresql-92-centos7 \
+    -e POSTGRESQL_USER=user \
+    -e POSTGRESQL_DATABASE=db \
+    -e POSTGRESQL_PASSWORD=password
+	
+	
+oc expose service myjdbccheck
+	
+	
+	 oc new-app mysql MYSQL_USER=raghu MYSQL_PASSWORD=raghu MYSQL_DATABASE=raghu -l db=mysql
+	 
+
+	 172.30.10.149
+	 
+	 
+oc describe service mysql	 
+Name:                   mysql
+Namespace:              mypocproject
+Labels:                 db=mysql
+Selector:               db=mysql,deploymentconfig=mysql
+Type:                   ClusterIP
+IP:                     172.30.10.149
+Port:                   3306-tcp        3306/TCP
+Endpoints:              172.17.0.8:3306
+Session Affinity:       None
+
+
+oc new-app https://github.com/openshift/origin/blob/master/examples/db-templates/redis-persistent-template.json
+

@@ -1,0 +1,10 @@
+If you wish to allocate more resources for your builds or deployments, 
+you can do that by increasing the limit. For deployments, you can use 
+the web interface -> 'Action' menu -> 'Edit Resource Limits'. For builds, 
+the same menu is not available, but you can use the 'Edit YAML' item and 
+specify the limit manually, by adding something like this under the 'spec' 
+section in the respective build config:
+
+resources:
+  limits:
+    memory: 1Gi

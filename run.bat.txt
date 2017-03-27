@@ -1,0 +1,2 @@
+oc env dc admin google_hidden_client_id=695894598191-4kfjdduubg093u0hktn45ujalkqk780j
+oc env dc angular2oauth google_hidden_client_secret=5EbEh2zyOeMRdpICHPKliD6e
